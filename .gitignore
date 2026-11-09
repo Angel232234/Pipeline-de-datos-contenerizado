@@ -1,0 +1,32 @@
+# Archivos de datos grandes (No subir al repositorio por regla de examen -5 pts)
+*.csv
+ventas_*.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Docker y entornos locales
+.env
+data/
+!data/input/.gitkeep
+hadoop_data/
+db_data/
+
+# Salidas de Hadoop y logs temporales
+resultado/
+output/
+part-*
+_SUCCESS
+*.log
+resultado_secuencial.txt
+
+# VS Code e IDEs
+.vscode/
+.idea/
