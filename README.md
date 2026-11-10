@@ -147,6 +147,28 @@ curl -s -X DELETE http://localhost:5000/resultados/T999
 
 ---
 
+## 📸 Evidencias de Ejecución (Capturas Solicitadas)
+
+Las siguientes capturas corresponden a las pruebas solicitadas en la rúbrica oficial y se encuentran almacenadas en el directorio `evidencias/`:
+
+### 1. Captura de `hadoop version`
+Comprobación del correcto funcionamiento de Hadoop standalone dentro del contenedor:
+![Hadoop Version](evidencias/01_hadoop_version.png)
+
+### 2. Captura de `ssh sin contraseña` (Parte B)
+Demostración de acceso local y entre contenedores (`api` hacia `hadoop`) mediante autenticación por par de llaves:
+![SSH sin contraseña](evidencias/02_ssh_sin_password.png)
+
+### 3. Captura de la salida del Job MapReduce (`part-00000`)
+Salida generada por Hadoop Streaming con los resultados de ticket promedio por tienda:
+![Salida MapReduce](evidencias/03_salida_mapreduce.png)
+
+### 4. Captura de la respuesta de la API REST
+Consultas a los endpoints `GET /resultados` y `GET /resultados/T001` con formato JSON:
+![Respuesta de la API](evidencias/04_respuesta_api.png)
+
+---
+
 ## 🔐 Demostración de SSH sin Contraseña (Parte B)
 
 ### 1. SSH Localhost dentro del contenedor `hadoop`
