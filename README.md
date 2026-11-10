@@ -157,15 +157,15 @@ Comprobación del correcto funcionamiento de Hadoop standalone dentro del conten
 
 ### 2. Captura de `ssh sin contraseña` (Parte B)
 Demostración de acceso local y entre contenedores (`api` hacia `hadoop`) mediante autenticación por par de llaves:
-![SSH sin contraseña](evidencias/02_ssh_sin_password.png)
+![SSH sin contraseña](evidencias/02_ssh_sin_password.jfif)
 
 ### 3. Captura de la salida del Job MapReduce (`part-00000`)
 Salida generada por Hadoop Streaming con los resultados de ticket promedio por tienda:
-![Salida MapReduce](evidencias/03_salida_mapreduce.png)
+![Salida MapReduce](evidencias/03_salida_mapreduce.jfif)
 
 ### 4. Captura de la respuesta de la API REST
 Consultas a los endpoints `GET /resultados` y `GET /resultados/T001` con formato JSON:
-![Respuesta de la API](evidencias/04_respuesta_api.png)
+![Respuesta de la API](evidencias/04_respuesta_api.jfif)
 
 ---
 
