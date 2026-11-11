@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Resultados por Tienda</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #1a1a1a;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+        .table-container {
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+        thead tr {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+        th {
+            padding: 14px 16px;
+            font-weight: 600;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        th:last-child {
+            border-right: none;
+        }
+        td {
+            padding: 12px 16px;
+            color: #333333;
+            border-bottom: 1px solid #e9ecef;
+            border-right: 1px solid #e9ecef;
+        }
+        td:last-child {
+            border-right: none;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        tbody tr:hover {
+            background-color: #f1f3f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Resultados de Ticket Promedio por Tienda</h1>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tienda</th>
+                        <th>Ticket Promedio ($)</th>
+                        <th>Última Actualización</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-body">
+                    <!-- Los datos se cargan dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        fetch('/resultados')
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('tabla-body');
+                tbody.innerHTML = '';
+                
+                if (data.resultados && data.resultados.length > 0) {
+                    data.resultados.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${item.id}</td>
+                            <td>${item.tienda}</td>
+                            <td>$${item.ticket_promedio.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                            <td>${new Date(item.actualizado_en).toLocaleString()}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No hay registros disponibles.</td></tr>';
+                }
+            })
+            .catch(err => {
+                console.error('Error al cargar datos:', err);
+                document.getElementById('tabla-body').innerHTML = '<tr><td colspan="4" style="text-align:center; color:red;">Error cargando los datos de la API.</td></tr>';
+            });
+    </script>
+</body>
+</html> 

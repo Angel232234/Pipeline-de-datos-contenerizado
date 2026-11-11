@@ -6,7 +6,7 @@ Dominio: Ticket Promedio por Tienda
 """
 import os
 import time
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from dotenv import load_dotenv
@@ -14,6 +14,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
+app.json.ensure_ascii = False  # Mantiene acentos y ñ correctos en JSON
 
 # Configuración de base de datos desde variables de entorno
 DB_HOST = os.getenv("DB_HOST", "db")
@@ -67,6 +68,12 @@ init_db()
 
 @app.route("/", methods=["GET"])
 def index():
+    """Renderiza la vista gráfica en HTML."""
+    return render_template("index.html")
+
+@app.route("/info", methods=["GET"])
+def info():
+    """Devuelve la información de los endpoints en formato JSON."""
     return jsonify({
         "status": "ok",
         "proyecto": "Examen Segundo Parcial - Pipeline de datos contenerizado",
@@ -74,9 +81,9 @@ def index():
         "pregunta_negocio": "Ticket promedio (ingreso promedio por registro) por tienda",
         "endpoints": {
             "GET /resultados": "Listar todos los resultados de ticket promedio por tienda",
-            "GET /resultados/<tienda>": "Consultar el ticket promedio de una tienda específica (ej. /resultados/T001)",
-            "POST /resultados": "Insertar un nuevo registro (JSON: {'tienda': 'T999', 'ticket_promedio': 1250.50})",
-            "PUT /resultados/<tienda>": "Actualizar el ticket promedio de una tienda existente",
+            "GET /resultados/<tienda>": "Consultar el ticket promedio de una tienda específica",
+            "POST /resultados": "Insertar un nuevo registro",
+            "PUT /resultados/<tienda>": "Actualizar el ticket promedio de una tienda",
             "DELETE /resultados/<tienda>": "Eliminar el registro de una tienda",
             "GET /health": "Verificar estado y conectividad a base de datos"
         }
@@ -105,7 +112,6 @@ def get_resultados():
         cur.close()
         conn.close()
 
-        # Convertir tipos no serializables si es necesario
         for r in rows:
             r["ticket_promedio"] = float(r["ticket_promedio"])
             r["actualizado_en"] = r["actualizado_en"].isoformat() if r.get("actualizado_en") else None
@@ -235,4 +241,4 @@ def delete_resultado(tienda):
 
 if __name__ == "__main__":
     port = int(os.getenv("API_PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=False)
+    app.run(host="0.0.0.0", port=port, debug=False)  
